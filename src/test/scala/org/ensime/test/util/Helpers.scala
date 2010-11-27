@@ -9,18 +9,17 @@ import scala.tools.nsc.reporters.{Reporter}
 import org.ensime.server._
 import org.ensime.config._
 import org.scalatest.TestFailedException
-
+import java.net.URLClassLoader
 
 object Helpers{
 
   def withPresCompiler(action:RichCompilerControl => Any ) =  {
     val settings = new Settings(Console.println)
 
-    //TODO: Don't hardcode this path!
+    val oldClasspath = Helpers.getClass.getClassLoader.asInstanceOf[URLClassLoader].getURLs().toList
+               .map {_.getPath } mkString ":"
     settings.processArguments(List(
-	"-classpath","project/boot/scala-2.8.1.RC3/lib/scala-library.jar",
-	"-verbose"
-      ), false)
+      "-classpath", oldClasspath), false)
     settings.usejavacp.value = false
     val reporter = new StoreReporter()
     val cc:RichCompilerControl = new RichPresentationCompiler(
