@@ -511,7 +511,7 @@ Analyzer will be restarted. All source will be recompiled."
     (comint-mode)
     (let ((process-environment (append env process-environment))
           (process-connection-type nil))
-      (set (make-local-variable 'comint-process-echoes) nil)
+      (set (make-local-variable 'comint-process-echoes) t)
       (set (make-local-variable 'comint-use-prompt-regexp) nil)
       (comint-exec (current-buffer) ensime-server-buffer-name
                    program nil program-args))
