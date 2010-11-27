@@ -156,12 +156,12 @@ the current project's dependencies. Returns list of form (cmd [arg]*)"
 (defun ensime-inf-switch ()
   "Switch to buffer containing the interpreter"
   (interactive)
-  (if (equal ensime-inf-buffer-name (buffer-name))
-      (switch-to-buffer-other-window (other-buffer))
-    (if (and (get-buffer ensime-inf-buffer-name)
-	     (ensime-inf-running-p-1))
-	(switch-to-buffer-other-window ensime-inf-buffer-name)
-      (ensime-inf-run-scala)))
+  (cond ((equal ensime-inf-buffer-name (buffer-name) )
+	 (switch-to-buffer-other-window (other-buffer)))
+	((and (get-buffer ensime-inf-buffer-name)
+	      (ensime-inf-running-p-1)) 
+	 (switch-to-buffer-other-window ensime-inf-buffer-name))
+	(t (ensime-inf-run-scala)))
   (goto-char (point-max)))
 
 (defun ensime-inf-send-tab ()
