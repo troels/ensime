@@ -161,8 +161,8 @@ the current project's dependencies. Returns list of form (cmd [arg]*)"
 	((and (get-buffer ensime-inf-buffer-name)
 	      (ensime-inf-running-p-1)) 
 	 (switch-to-buffer-other-window ensime-inf-buffer-name))
-	(t (ensime-inf-run-scala)))
-  (goto-char (point-max)))
+	(t (ensime-inf-run-scala)
+	   (goto-char (point-max)))))
 
 (defun ensime-inf-send-tab ()
   (interactive)
