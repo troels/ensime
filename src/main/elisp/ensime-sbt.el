@@ -178,7 +178,8 @@
  is found."
   (interactive)
   (let ((fn (buffer-file-name)))
-    (let ((path (file-name-directory fn)))
+    (let ((path (or (and fn (file-name-directory fn))
+		    default-directory)))
       (while (and (not (ensime-sbt-project-dir-p path))
 		  (not (ensime-sbt-at-root path)))
 	(setf path (file-truename (ensime-sbt-parent-path path))))
@@ -193,7 +194,5 @@
       (if (not (ensime-sbt-project-dir-p parent-path))
 	  path
 	parent-path))))
-
-
 
 (provide 'ensime-sbt)
